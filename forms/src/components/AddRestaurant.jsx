@@ -1,4 +1,5 @@
 import { useState } from "react";
+
 function AddRestaurant({ updateRestaurants }) {
   const [formData, setFormData] = useState( {
     name: "",
@@ -7,8 +8,15 @@ function AddRestaurant({ updateRestaurants }) {
     cuisine: "",
     rating: "",
     image: ""
-  })
+  });
 
+  // e is the event object
+  // onChange is an event handler
+  // when event handlers call functions, React calls handleChange(e)
+  // most relevant part of event object for forms is e.target
+  // this represents the html element that triggered the event.
+  // e.target.name tells us which field changes
+  // e.target.value tells us what the user typed
   const handleChange = (e) => {
     const name = e.target.name
     const value = e.target.value
@@ -16,8 +24,13 @@ function AddRestaurant({ updateRestaurants }) {
     setFormData({...formData, [name]: value})
   }
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    updateRestaurants(formData);
+  }
+
   return (
-    <form onSubmit="handleSubmit">
+    <form onSubmit={handleSubmit}>
       <div>
         <label>Name:</label>
         <input type="text" name="name" value={formData.name} onChange={handleChange} required />
